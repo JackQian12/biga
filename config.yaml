@@ -41,7 +41,7 @@ search:
   snippet_selector: ""
 
 news:
-  channels: [cls, ths, futu, cctv, cx, sina]
+  channels: [cls, ths, futu, cctv, cx, sina, em, xh, cninfo]
   limit_per_channel: 30
   material: true
   material_sector_top: 20

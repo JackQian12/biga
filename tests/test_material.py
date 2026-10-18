@@ -40,6 +40,14 @@ def test_news_channel_normalizers():
     assert nc._norm_cctv({"title": "央视", "date": "2026", "content": "cc"})["source"] == "央视新闻"
     assert nc._norm_cx({"tag": "市场动态", "summary": "财新快讯正文", "url": "http://z"})["source"].startswith("财新")
     assert nc._norm_cx({"summary": ""}) is None
+    # 新增来源：东方财富/新华网/巨潮资讯
+    em = nc._norm_em({"标题": "E", "摘要": "s", "发布时间": "2026-10-18 09:00", "链接": "http://e"})
+    assert em["source"] == "东方财富" and em["url"] == "http://e" and em["summary"] == "s"
+    xh = nc._norm_xinhua({"标题": "新华网标题", "链接": "/fortune/20261018/aa/c.html", "发布时间": "2026-10-18"})
+    assert xh["source"] == "新华网" and xh["url"] == "/fortune/20261018/aa/c.html"
+    cn = nc._norm_cninfo({"标题": "公告标题", "证券代码": "600000", "证券名称": "浦发银行",
+                          "发布时间": "2026-10-18 10:00", "链接": "https://static.cninfo.com.cn/x.pdf"})
+    assert cn["source"].startswith("巨潮资讯网[浦发银行600000]") and cn["url"].endswith(".pdf")
 
 
 def test_fetch_flash_news_unknown_channel(app_config):

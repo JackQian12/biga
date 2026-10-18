@@ -49,7 +49,7 @@ search:
 
 # 多来源新闻与市场素材
 news:
-  channels: [cls, ths, futu, cctv, cx, sina]   # 新闻渠道：cls=财联社, ths=同花顺, futu=富途, cctv=央视, cx=财新, sina=新浪全球快讯
+  channels: [cls, ths, futu, cctv, cx, sina, em, xh, cninfo]   # 新闻渠道：cls=财联社, ths=同花顺, futu=富途, cctv=央视, cx=财新, sina=新浪全球快讯, em=东方财富, xh=新华网财经, cninfo=巨潮资讯公告
   limit_per_channel: 30                  # 每个渠道每次最多入库条数；快报另会削减财新占比并优先展示关联个股
   material: true                         # 是否采集市场素材（板块热度/财经日历）
   material_sector_top: 20                # 板块热度榜条数

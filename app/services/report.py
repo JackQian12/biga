@@ -4,7 +4,7 @@
 数据来源（akshare 免费接口，无需 token）：
 - 指数实时：stock_zh_index_spot_sina（替代已下线的 stock_zh_index_spot）
 - 全A实时：stock_zh_a_spot（用于涨幅榜/成交额榜）
-- 市场新闻：多渠道快讯（财联社/同花顺/富途/央视/财新/新浪）
+- 市场新闻：多渠道快讯（含财联社/同花顺/富途/央视/财新/新浪/东方财富/新华网/巨潮资讯）
 - 板块热度：stock_sector_spot（新浪行业板块）
 
 生成到 config.storage 目录下的「市场信息快报.md」。
@@ -250,7 +250,7 @@ def generate_report(out_path: Optional[Path] = None) -> str:
     lines.append("## 四、市场快讯")
     lines.append("")
     if news:
-        lines.append("以下快讯聚合自财联社/同花顺/富途/央视/财新/新浪，含关联个股者优先展示：")
+        lines.append("以下快讯聚合自财联社/同花顺/富途/央视/财新/新浪/东方财富/新华网/巨潮资讯，含关联个股者优先展示：")
         lines.append("")
         news = _sort_news_by_related(news, name_to_code)
         lines.extend(_fmt_news_md(news, limit=25, name_to_code=name_to_code))

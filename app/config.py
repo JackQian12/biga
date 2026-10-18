@@ -74,7 +74,7 @@ class SearchCfg:
 
 @dataclass
 class NewsCfg:
-    channels: List[str] = field(default_factory=lambda: ["cls", "ths", "futu", "cctv", "cx", "sina"])
+    channels: List[str] = field(default_factory=lambda: ["cls", "ths", "futu", "cctv", "cx", "sina", "em", "xh", "cninfo"])
     limit_per_channel: int = 15       # 每个新闻渠道最多入库条数
     material: bool = True             # 是否采集市场素材（板块热度/财经日历）
     material_sector_top: int = 20     # 板块热度榜条数
@@ -235,7 +235,7 @@ def load_config(path: str | Path | None = None) -> AppConfig:
             snippet_selector=str(src.get("snippet_selector", "")),
         ),
         news=NewsCfg(
-            channels=list(nw.get("channels", []) or ["cls", "ths", "futu", "cctv", "cx", "sina"]),
+            channels=list(nw.get("channels", []) or ["cls", "ths", "futu", "cctv", "cx", "sina", "em", "xh", "cninfo"]),
             limit_per_channel=int(nw.get("limit_per_channel", 15)),
             material=bool(nw.get("material", True)),
             material_sector_top=int(nw.get("material_sector_top", 20)),
