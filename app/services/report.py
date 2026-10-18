@@ -289,6 +289,18 @@ def generate_report(out_path: Optional[Path] = None) -> str:
         lines.append("（未能获取板块热度）")
     lines.append("")
 
+    # ---- 六、妖股资金溯源（连板妖股 → 龙虎榜 → 机构/游资偏好） ----
+    try:
+        from app.services import yaogu_trace
+
+        lines.extend(yaogu_trace.format_yaogu_md())
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("妖股资金溯源失败：%s", exc)
+        lines.append("## 六、妖股资金溯源")
+        lines.append("")
+        lines.append("（未能完成妖股资金溯源分析）")
+        lines.append("")
+
     md = "\n".join(lines)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(md, encoding="utf-8")
