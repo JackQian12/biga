@@ -1,0 +1,71 @@
+# 复制为 config.yaml 并按需修改
+
+# 数据源配置
+data_source:
+  provider: akshare          # akshare | tushare
+  tushare_token: ""          # provider=tushare 时必填
+
+# 调度配置（盘中同步）
+schedule:
+  market_sync_interval_seconds: 900   # 行情/基本面同步间隔
+  news_interval_seconds: 3600         # 新闻抓取间隔
+  update_market_only_in_trading: true # 仅在交易时段更新
+
+# 存储
+storage:
+  sqlite_path: ./data/biga.db
+
+# 认证
+auth:
+  api_tokens:
+    - "change-me-token-1"
+    - "change-me-token-2"
+
+# LLM（OpenAI 兼容端点）
+llm:
+  base_url: http://192.168.50.46:8888/v1
+  model: ""                  # 留空则使用端点默认模型
+  api_key: ""                # 本地端点通常无需 key
+  temperature: 0.3
+  timeout: 90
+
+# 联网搜索（可插拔；默认自建爬虫抓取必应/百度，反爬机制内置）
+search:
+  provider: bing             # bing | baidu | mock
+  engine: bing               # 首选引擎；被反爬拦截会自动兜底另一个
+  top_k: 5
+  timeout: 15
+  user_agent: ""             # 留空则轮换使用下方 user_agents 池
+  user_agents: []            # UA 轮换池，可配置多组手机/PC UA
+  proxy_url: ""              # 可选代理，如 http://127.0.0.1:7890（爬虫被限时用）
+  retries: 3                 # 反爬：403/429/5xx 指数退避重试次数
+  backoff: 1.5               # 反爬：退避基数
+  enable_delay: true         # 反爬：请求间随机延迟
+  min_delay: 0.4
+  max_delay: 1.6
+  fetch_content: true        # 是否抓取结果正文作为 LLM 上下文
+  result_selector: ""        # 可选：覆盖结果链接 CSS 选择器
+  snippet_selector: ""       # 可选：覆盖摘要 CSS 选择器
+
+# 多来源新闻与市场素材
+news:
+  channels: [cls, ths, futu, cctv, cx, sina]   # 新闻渠道：cls=财联社, ths=同花顺, futu=富途, cctv=央视, cx=财新, sina=新浪全球快讯
+  limit_per_channel: 30                  # 每个渠道每次最多入库条数；快报另会削减财新占比并优先展示关联个股
+  material: true                         # 是否采集市场素材（板块热度/财经日历）
+  material_sector_top: 20                # 板块热度榜条数
+  material_calendar_top: 10              # 财经日历条数
+
+# 企业微信推送（给订阅用户推 A 股情报日报）——支持两种渠道，可只用其一
+wecom:
+  enabled: false             # 设为 true 启用
+  # 渠道 1：群机器人 Webhook（加签/未加签均可）
+  webhook_url: ""            # 群机器人 Webhook 地址
+  webhook_secret: ""         # 加签密钥；未加签留空
+  # 渠道 2：自建应用消息（配置后，未单独配置 webhook 的分组默认走此渠道）
+  corpid: ""                 # 企业 ID（CorpID）
+  agentid: ""                # 自建应用 AgentId
+  app_secret: ""             # 自建应用 Secret
+  app_touser: "@all"         # 接收人 userid，多个用 | 分隔；@all 表示全员
+  daily_push_time: "16:15"   # 每个交易日收盘后推送日报的时间
+  push_morning_time: ""      # 可选盘前简报时间，留空不推
+

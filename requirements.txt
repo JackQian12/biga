@@ -1,0 +1,14 @@
+fastapi>=0.141
+uvicorn[standard]>=0.52
+APScheduler>=3.11
+pydantic>=2.13
+pydantic-settings>=2.15
+PyYAML>=6.0
+httpx>=0.28
+requests>=2.32
+beautifulsoup4>=4.12
+lxml>=5.2
+
+# ---- optional data sources ----
+akshare>=1.17  # free, no token needed (broker news/material channels)
+# tushare >=1.4  (needs a real token; uncomment to install)

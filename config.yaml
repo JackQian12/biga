@@ -1,0 +1,59 @@
+# 复制自 config.example.yaml，可按需修改
+data_source:
+  provider: akshare
+  tushare_token: ""
+
+schedule:
+  market_sync_interval_seconds: 900
+  news_interval_seconds: 3600
+  update_market_only_in_trading: true
+
+storage:
+  sqlite_path: ./data/biga.db
+
+auth:
+  api_tokens:
+    - "change-me-token-1"
+    - "change-me-token-2"
+
+llm:
+  base_url: http://192.168.50.46:8888/v1
+  model: ""
+  api_key: ""
+  temperature: 0.3
+  timeout: 90
+
+search:
+  provider: bing
+  engine: bing
+  top_k: 5
+  timeout: 15
+  user_agent: ""
+  user_agents: []
+  proxy_url: ""
+  retries: 3
+  backoff: 1.5
+  enable_delay: true
+  min_delay: 0.4
+  max_delay: 1.6
+  fetch_content: true
+  result_selector: ""
+  snippet_selector: ""
+
+news:
+  channels: [cls, ths, futu, cctv, cx, sina]
+  limit_per_channel: 30
+  material: true
+  material_sector_top: 20
+  material_calendar_top: 10
+
+wecom:
+  enabled: false
+  webhook_url: ""
+  webhook_secret: ""
+  corpid: ""
+  agentid: ""
+  app_secret: ""
+  app_touser: "@all"
+  daily_push_time: "16:15"
+  push_morning_time: ""
